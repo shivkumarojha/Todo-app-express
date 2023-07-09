@@ -93,7 +93,10 @@ app.put('/api/v1/tasks/:id', (req, res) => {
 
 })
 
-
+// Catch all unmatched route handler
+app.use((req, res) => {
+    res.status(404).send("Not Found")
+})
 // Starting the server
 app.listen(PORT, () => 
 {
