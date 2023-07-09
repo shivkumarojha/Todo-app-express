@@ -42,6 +42,25 @@ app.post('/api/v1/tasks', (req, res) => {
 
 })
 
+// Delete a Task of given id
+app.delete('/api/v1/tasks/:id', (req, res) => {
+    const taskId  = req.params.id
+    let taskIndex = -1
+    for (i=0; i<tasks.length; i++) {
+        if(tasks[i].id === taskId) {
+            taskIndex = i
+            break
+        }
+    }
+
+    if(taskIndex !== -1) {
+        tasks.splice(taskIndex, 1)
+        res.json(tasks)
+    } else {
+        res.status(404).send("Task not found")
+    }
+
+}) 
 
 
 // Starting the server
@@ -49,4 +68,3 @@ app.listen(PORT, () =>
 {
     console.log(`Listening at port ${PORT}`)
 })
-    
