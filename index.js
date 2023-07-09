@@ -17,7 +17,7 @@ const tasks = []
 
 // Get request handler for getting every todo element
 app.get('/api/v1/tasks', (req, res) => {
-    res.status(200). json(tasks)
+    res.status(200).json(tasks)
 })
 
 
@@ -61,6 +61,37 @@ app.delete('/api/v1/tasks/:id', (req, res) => {
     }
 
 }) 
+
+// Update task 
+app.put('/api/v1/tasks/:id', (req, res) => {
+    const taskId = req.params.id
+    let taskIndex = -1
+
+    const title = req.body.title;
+    const details = req.body.details;
+    const date = req.body.date;
+    const time = req.body.time;
+    const repeat = req.body.repeat;
+    
+    for(i=0; i<tasks.length; i++) {
+        if(tasks[i].id === taskId) {
+            taskIndex =  i
+            break
+        }
+    }
+
+    if (taskIndex !== -1) {
+        tasks[taskIndex].title = title,
+        tasks[taskIndex].details = details,
+        tasks[taskIndex].date = date,
+        tasks[taskIndex].time = title,
+        tasks[taskIndex].repeat = repeat,
+        res.send("Task Updated")
+    } else {
+        res.status(404).send("Task not found")
+    }
+
+})
 
 
 // Starting the server
