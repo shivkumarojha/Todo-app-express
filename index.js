@@ -12,8 +12,17 @@ const PORT = '3000'
 // MiddleWare for bodyParser
 app.use(bodyParser.json())
 
+
+// Static middleware
+app.use(express.static('public'))
+
 // Array of objects that will contain each task 
 const tasks = []
+
+// Main route handler
+// app.get('/', (req, res) => {
+//     res.send()
+// })
 
 // Get request handler for getting every todo element
 app.get('/api/v1/tasks', (req, res) => {
