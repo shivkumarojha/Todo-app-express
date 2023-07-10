@@ -5,14 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Todo: Tasks</title>
 </head>
+<link rel="stylesheet" href="css/style.css">
 <body>
-    <h1>Tasks: Create Todos with Love</h1>
-    <input type="text" id="title" placeholder="Title"> <br> <br>
-    <input type="text" id="details" placeholder="Details"> <br> <br>
-    <input type="date" name="date" id="date">
-    <input type="time" name="time" id="time"> <br> <br>
-    Repeat: <input type="checkbox" name="repeat" id="repeat"> <br> <br>
-    <button>Add Task</button>
 
+    <div class="container"> 
+        <div class="todo">
+            <h1>Tasks: Create Todos with Love</h1>
+            <input type="text" id="title" placeholder="Title"> <br> <br>
+            <input type="text" id="details" placeholder="Details"> <br> <br>
+            <input type="date" name="date" id="date">
+            <input type="time" name="time" id="time"> <br> <br>
+            Repeat: <input type="checkbox" name="repeat" id="repeat"> <br> <br>
+            <button onclick="createTodo()">Add Task</button>
+        </div>
+        <div id="tasks">
+            <h1>Tasks</h1>
+            
+        </div>
+    </div>
+
+    <!-- Script for handling interactivity -->
+    <script src="js/script.js"></script>
 </body>
 </html>
