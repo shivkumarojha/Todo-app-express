@@ -1,3 +1,42 @@
+// Get all todos when app loads
+const getTodo = () => {
+    fetch('http://localhost:3000/api/v1/tasks', {
+        method: 'GET'
+    })
+    .then(response => response.json())
+    .then(data => {
+        for(i=0; i<data.length; i++) {
+            let parentEl = document.getElementById("tasks");
+
+            // Created todo Item to hold list of items
+            let todoItem = document.createElement("div");
+            let todoUl = document.createElement("ul");
+            let todoLi = document.createElement("li");
+
+            // Checkbox for each task
+            let checkBoxSpan = document.createElement("span");
+            let checkBoxInput = document.createElement("input");
+            checkBoxInput.setAttribute("type", "checkbox");
+            checkBoxSpan.appendChild(checkBoxInput);
+            todoLi.appendChild(checkBoxSpan);
+
+            // Title for each task
+            let titleSpan = document.createElement("span");
+            titleSpan.textContent = data[i].title;
+            todoLi.appendChild(titleSpan);
+
+            // appnended items on respective elements
+            todoUl.appendChild(todoLi);
+            todoItem.appendChild(todoUl);
+            parentEl.appendChild(todoItem);
+
+        }
+    })
+
+}
+// Calling getTodo function to load all todos
+getTodo()
+
 const createTodo = () => {
     let title = document.getElementById('title').value
     let details = document.getElementById('details').value
