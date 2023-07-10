@@ -10,20 +10,44 @@ const getTodo = () => {
 
             // Created todo Item to hold list of items
             let todoItem = document.createElement("div");
+            
             let todoUl = document.createElement("ul");
             let todoLi = document.createElement("li");
-
+            todoLi.setAttribute("class", "singleTask");
+            
             // Checkbox for each task
             let checkBoxSpan = document.createElement("span");
             let checkBoxInput = document.createElement("input");
             checkBoxInput.setAttribute("type", "checkbox");
+            
+            // Delete event listener
+            let taskId = data[i].id
+            checkBoxInput.addEventListener("click", () => {
+                
+                fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+                    method: 'DELETE'
+                })
+                .then(response => {
+                    if(response.ok) {
+                        todoItem.remove()
+                    }
+                })
+            })
+            
+
             checkBoxSpan.appendChild(checkBoxInput);
             todoLi.appendChild(checkBoxSpan);
 
             // Title for each task
             let titleSpan = document.createElement("span");
+            titleSpan.setAttribute('class', "title")
+            let detailsPtag = document.createElement('p')
+            detailsPtag.setAttribute('class', "details")
+            detailsPtag.innerHTML = data[i].details
+            
             titleSpan.textContent = data[i].title;
             todoLi.appendChild(titleSpan);
+            todoLi.appendChild(detailsPtag)
 
             // appnended items on respective elements
             todoUl.appendChild(todoLi);
@@ -51,8 +75,7 @@ const createTodo = () => {
     }else {
         repeat = false
     }
-    console.log(title)
-    
+
     fetch("http://localhost:3000/api/v1/tasks", {
       method: "POST",
       headers: {
@@ -67,29 +90,50 @@ const createTodo = () => {
       }),
     }).then(response => response.json())
     .then(data => {
-        let parentEl = document.getElementById('tasks')
+      let parentEl = document.getElementById("tasks");
 
-        // Created todo Item to hold list of items
-        let todoItem = document.createElement('div')
-        let todoUl = document.createElement('ul')
-        let todoLi = document.createElement('li')
-        
-        // Checkbox for each task
-        let checkBoxSpan = document.createElement('span')
-        let checkBoxInput = document.createElement('input')
-        checkBoxInput.setAttribute("type", "checkbox")
-        checkBoxSpan.appendChild(checkBoxInput)
-        todoLi.appendChild(checkBoxSpan)
-        
-        // Title for each task
-        let titleSpan = document.createElement('span')
-        titleSpan.textContent = data.title
-        todoLi.appendChild(titleSpan)
+      // Created todo Item to hold list of items
+      let todoItem = document.createElement("div");
+      todoItem.setAttribute("class", "todoItem");
+      let todoUl = document.createElement("ul");
+      let todoLi = document.createElement("li");
 
-        // appnended items on respective elements
-        todoUl.appendChild(todoLi)
-        todoItem.appendChild(todoUl)
-        parentEl.appendChild(todoItem)
+      // attribute for todoLi
+      todoLi.setAttribute("class", "singleTask");
+      // Checkbox for each task
+      let checkBoxSpan = document.createElement("span");
+      let checkBoxInput = document.createElement("input");
+      checkBoxInput.setAttribute("type", "checkbox");
 
+      // Delete event listener
+      let taskId = data.id;
+      checkBoxInput.addEventListener("click", () => {
+        fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+          method: "DELETE",
+        }).then((response) => {
+          if (response.ok) {
+            todoItem.remove();
+          }
+        });
+      });
+
+      checkBoxSpan.appendChild(checkBoxInput);
+      todoLi.appendChild(checkBoxSpan);
+
+      // Title for each task
+      let titleSpan = document.createElement("span");
+      titleSpan.textContent = data.title;
+      titleSpan.setAttribute("class", "title");
+      let detailsPtag = document.createElement("p");
+      detailsPtag.setAttribute("class", "details");
+      detailsPtag.innerHTML = data.details;
+
+      todoLi.appendChild(titleSpan);
+      todoLi.appendChild(detailsPtag);
+
+      // appnended items on respective elements
+      todoUl.appendChild(todoLi);
+      todoItem.appendChild(todoUl);
+      parentEl.appendChild(todoItem);
     })
 }

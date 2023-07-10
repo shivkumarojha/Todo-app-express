@@ -3,16 +3,41 @@ body {
     padding: 0;
 }
 
-.todo {
-    width: 40%;    
-}
 .container {
     display: flex;
     flex-basis: 300px;
     justify-content: space-between;
-    flex-direction: row-reverse;
+    flex-direction: row;
 }
 
+.todo {
+    width: 40%;
+    position: sticky;
+    background-color: #f0f0f0;
+    padding: 20px;
+    top: 0px;    
+}
 ul li {
     list-style-type: none;
+}
+
+.title {
+    font-size: 18px;
+    font-weight: bold;
+
+}
+.details {
+    margin-top: 8px;
+    margin-left: 30px;
+}
+
+.tasks {
+    width: 60%;
+
+}
+
+.singleTask {
+    background-color: rgb(195, 249, 249);
+    padding: 20px;
+    margin: 10px;
 }
