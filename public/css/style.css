@@ -5,28 +5,32 @@ body {
 
 .container {
     display: flex;
-    flex-basis: 300px;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     flex-direction: row;
 }
 
 .todo {
+    flex-basis: 30%;
     width: 40%;
+    height: 100vh;
     position: sticky;
     background-color: #f0f0f0;
     padding: 20px;
     top: 0px;    
 }
+#tasks {
+    flex-basis: 70%;
+}
 ul li {
     list-style-type: none;
 }
 
-.title {
+#taskTitle {
     font-size: 18px;
     font-weight: bold;
 
 }
-.details {
+.taskDetails {
     margin-top: 8px;
     margin-left: 30px;
 }

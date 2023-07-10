@@ -9,8 +9,6 @@ const { v4: uuidv4 } = require('uuid')
 // Port 
 const PORT = '3000'
 
-// MiddleWare for bodyParser
-app.use(bodyParser.json())
 
 
 // Static middleware
@@ -19,6 +17,8 @@ app.use(express.static('public'))
 // Array of objects that will contain each task 
 const tasks = []
 
+// MiddleWare for bodyParser
+app.use(bodyParser.json())
 // Main route handler
 // app.get('/', (req, res) => {
 //     res.send()
@@ -38,7 +38,7 @@ app.post('/api/v1/tasks', (req, res) => {
     const time = req.body.time
     const repeat = req.body.repeat
 
-    task = {
+    let task = {
         id: uuidv4(),
         title: title,
         details: details,
@@ -64,7 +64,7 @@ app.delete('/api/v1/tasks/:id', (req, res) => {
 
     if(taskIndex !== -1) {
         tasks.splice(taskIndex, 1)
-        res.json(tasks)
+        res.status(200).send('deleted')
     } else {
         res.status(404).send("Task not found")
     }
@@ -93,7 +93,7 @@ app.put('/api/v1/tasks/:id', (req, res) => {
         tasks[taskIndex].title = title,
         tasks[taskIndex].details = details,
         tasks[taskIndex].date = date,
-        tasks[taskIndex].time = title,
+        tasks[taskIndex].time = time,
         tasks[taskIndex].repeat = repeat,
         res.send("Task Updated")
     } else {
