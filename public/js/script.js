@@ -72,13 +72,13 @@ const updateTask = (taskId) => {
     }),
   })
   .then(() => {
-    console.log(taskId)
     document.getElementById(`taskTitle-${taskId}`).textContent = title;
     document.getElementById(`taskDetails-${taskId}`).textContent = details;
     document.getElementById(
       `taskDateTime-${taskId}`
     ).textContent = `${date} at ${time}`;
     let updateTodoButton = document.getElementById('createTodo')
+    updateTodoButton.setAttribute('onclick', 'createTodo()')
     updateTodoButton.textContent = "Add Task"
     
     
@@ -140,7 +140,7 @@ const getTodo = () => {
         // Render edit Button
         editButton = renderEditButton();
 
-        //   Edit Button Event Listener
+        // Edit Button Event Listener
         let title = data[i].title;
         let details = data[i].details;
         let date = data[i].date;
@@ -215,54 +215,100 @@ const createTodo = () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      let parentEl = document.getElementById("tasks");
 
-      // Created todo Item to hold list of items
-      let todoItem = document.createElement("div");
-      todoItem.setAttribute("class", "todoItem");
-      let todoUl = document.createElement("ul");
-      let todoLi = document.createElement("li");
-      let taskId = data.id;
+         let parentEl = document.getElementById("tasks");
 
-      // attribute for todoLi
-      todoLi.setAttribute("class", "singleTask");
-      // Checkbox for each task
-      let checkBoxSpan = document.createElement("span");
-      let checkBoxInput = document.createElement("input");
-      checkBoxInput.setAttribute("type", "checkbox");
-      checkBoxInput.setAttribute('id', `taskRepeat-${taskId}`)
+         // Created todo Item to hold list of items
+         let todoItem = document.createElement("div");
 
-      // Delete Task
-      checkBoxInput.addEventListener("click", () =>
-        deleteTask(taskId, todoItem)
-      );
+         let todoUl = document.createElement("ul");
+         let todoLi = document.createElement("li");
+         todoLi.setAttribute("class", "singleTask");
 
-      checkBoxSpan.appendChild(checkBoxInput);
-      todoLi.appendChild(checkBoxSpan);
+         // Checkbox for each task
+         let checkBoxSpan = document.createElement("span");
+         let checkBoxInput = document.createElement("input");
+         checkBoxInput.setAttribute("type", "checkbox");
 
-      // Title for each task
-      let titleSpan = document.createElement("span");
-      titleSpan.textContent = data.title;
-      titleSpan.setAttribute("class", "title");
-      let detailsPtag = document.createElement("p");
-      detailsPtag.setAttribute("class", "details");
-      detailsPtag.innerHTML = data.details;
+         // Delete event listener
+         let taskId = data.id;
+         checkBoxInput.addEventListener("click", () =>
+           deleteTask(taskId, todoItem)
+         );
 
-      // Date and time Span element
-      let dateTimeSpan = document.createElement("span");
-      dateTimeSpan.setAttribute("class", "dateTime");
-      dateTimeSpan.textContent = `${data.date} at ${data.time}`;
+         // append checkbox before title
+         checkBoxSpan.appendChild(checkBoxInput);
+         todoLi.appendChild(checkBoxSpan);
+
+         // Title for each task
+         let titleSpan = document.createElement("span");
+         titleSpan.setAttribute("id", "taskTitle");
+         titleSpan.setAttribute("id", `taskTitle-${taskId}`);
+         titleSpan.textContent = data.title;
+
+         // Detail for each task
+         let detailsPtag = document.createElement("p");
+         detailsPtag.setAttribute("class", "taskDetails");
+         detailsPtag.setAttribute("id", `taskDetails-${taskId}`);
+         detailsPtag.textContent = data.details;
+
+         // Date and time Span element
+         let dateTimeSpan = document.createElement("span");
+         dateTimeSpan.setAttribute("class", "taskDateTime");
+         // Unique id for each date time
+         dateTimeSpan.setAttribute("id", `taskDateTime-${taskId}`);
+         dateTimeSpan.textContent = `${data.date} at ${data.time}`;
+
+
+
+    //   let parentEl = document.getElementById("tasks");
+
+    //   // Created todo Item to hold list of items
+    //   let todoItem = document.createElement("div");
+    //   todoItem.setAttribute("class", "todoItem");
+    //   let todoUl = document.createElement("ul");
+    //   let todoLi = document.createElement("li");
+    //   let taskId = data.id;
+
+    //   // attribute for todoLi
+    //   todoLi.setAttribute("class", "singleTask");
+    //   // Checkbox for each task
+    //   let checkBoxSpan = document.createElement("span");
+    //   let checkBoxInput = document.createElement("input");
+    //   checkBoxInput.setAttribute("type", "checkbox");
+    //   checkBoxInput.setAttribute('id', `taskRepeat-${taskId}`)
+
+    //   // Delete Task
+    //   checkBoxInput.addEventListener("click", () =>
+    //     deleteTask(taskId, todoItem)
+    //   );
+
+    //   checkBoxSpan.appendChild(checkBoxInput);
+    //   todoLi.appendChild(checkBoxSpan);
+
+    //   // Title for each task
+    //   let titleSpan = document.createElement("span");
+    //   titleSpan.textContent = data.title;
+    //   titleSpan.setAttribute("class", "title");
+    //   let detailsPtag = document.createElement("p");
+    //   detailsPtag.setAttribute("class", "details");
+    //   detailsPtag.innerHTML = data.details;
+
+    //   // Date and time Span element
+    //   let dateTimeSpan = document.createElement("span");
+    //   dateTimeSpan.setAttribute("class", "dateTime");
+    //   dateTimeSpan.textContent = `${data.date} at ${data.time}`;
 
       // Render edit Button
       editButton = renderEditButton();
 
-      //   Edit Button Event Listener
-      editButton.addEventListener("onclick", () => {
-        let title = data.title;
-        let details = data.details;
-        let date = data.date;
-        let time = data.time;
-        let repeat = data.repeat;
+      // Edit Button Event Listener
+      let title = data.title;
+      let details = data.details;
+      let date = data.date;
+      let time = data.time;
+      let repeat = data.repeat;
+      editButton.addEventListener("click", () => {
         document.getElementById("title").value = title;
         document.getElementById("details").value = details;
         document.getElementById("date").value = date;
@@ -270,6 +316,7 @@ const createTodo = () => {
         document.getElementById("repeat").value = repeat;
         let updateTodoButton = document.getElementById("createTodo");
 
+        
         updateTodoButton.setAttribute("onclick", `updateTask('${taskId}')`);
         updateTodoButton.innerHTML = "Update Todo";
         
