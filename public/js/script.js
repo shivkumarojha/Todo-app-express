@@ -33,7 +33,7 @@ const renderEditButton = () => {
 
 // Delete Task
 const deleteTask = (taskId, todoItem) => {
-  fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+  fetch(`https://todo-nq8q.onrender.com/api/v1/tasks/${taskId}`, {
     method: "DELETE",
   }).then((response) => {
     if (response.ok) {
@@ -58,7 +58,7 @@ const updateTask = (taskId) => {
     repeat = false;
   }
 
-  fetch(`http://localhost:3000/api/v1/tasks/${taskId}`, {
+  fetch(`https://todo-nq8q.onrender.com/api/v1/tasks/${taskId}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -88,7 +88,7 @@ const updateTask = (taskId) => {
 
 // Get all todos when app loads
 const getTodo = () => {
-  fetch("http://localhost:3000/api/v1/tasks", {
+  fetch("https://todo-nq8q.onrender.com/api/v1/tasks", {
     method: "GET",
   })
     .then((response) => response.json())
@@ -200,7 +200,7 @@ const createTodo = () => {
   }
 
 //   Create New Task
-  fetch("http://localhost:3000/api/v1/tasks", {
+  fetch("https://todo-nq8q.onrender.com/api/v1/tasks", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
